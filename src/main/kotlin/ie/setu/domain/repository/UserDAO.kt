@@ -24,31 +24,20 @@ class UserDAO {
     }
 
     fun findByEmail(email: String) :User?{
-        return users.find {it.email == email}
+        return users.find { it.email == email }
     }
 
-    fun delete(id: Int): Int {
-        val userToRemove = users.find { it.id == id }
-        return if (userToRemove != null) {
-            users.remove(userToRemove)
-            1 // Return 1 to indicate that one user was deleted
-        } else {
-            0 // Return 0 to indicate that no user was found to delete
-        }
+    fun delete(id: Int){
+        val user = findById(id)
+        users.remove(user)
     }
 
-//    fun update(id: Int, user: User){
-//        return users.update(id,user)
-//    }
-    fun update(id: Int, updatedUser: User): Boolean {
-        val index = users.indexOfFirst { it.id == id }
-        return if (index != -1) {
-            // Update the user at the found index
-            users[index] = updatedUser.copy(id = id) // Ensure the ID remains the same
-            true // Indicate that the update was successful
-        } else {
-            false // Indicate that no user was found to update
-        }
+    fun update(id: Int, user: User){
+        val foundUser = findById(id)
+        foundUser?.email = user.email
+        foundUser?.name = user.name
+        foundUser?.id = user.id
     }
+
 
 }

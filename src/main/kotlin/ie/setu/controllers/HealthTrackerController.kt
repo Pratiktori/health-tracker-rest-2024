@@ -28,39 +28,23 @@ object HealthTrackerController {
         ctx.json(user)
     }
 
-    fun getUserByEmail(ctx: Context) {
-        val user = userDao.findByEmail(ctx.pathParam("email").toString())
+    fun getUserByEmail(ctx: Context){
+        val user = userDao.findByEmail(ctx.pathParam("email"))
         if (user != null) {
             ctx.json(user)
         }
     }
 
-    fun deleteUser(ctx: Context) {
-        val user = userDao.delete(ctx.pathParam("user-id").toInt())
-        if (user != null) {
-            ctx.json(user)
-        }
+    fun deleteUser(ctx: Context){
+        userDao.delete(ctx.pathParam("user-id").toInt())
     }
 
-    fun updateUser(ctx: Context) {
-        try {
-            val userId = ctx.pathParam("user-id").toInt()
-            val mapper = jacksonObjectMapper()
-            val updatedUser = mapper.readValue<User>(ctx.body())
-
-            // Call the update method on the DAO
-            if (userDao.update(userId, updatedUser)) {
-                ctx.status(200)
-            } else {
-                ctx.status(204)
-                ctx.json(mapOf("message" to "User not found"))
-            }
-        } catch (e: NumberFormatException) {
-            ctx.status(400)
-            ctx.json(mapOf("message" to "Invalid user ID format"))
-        } catch (e: Exception) {
-            ctx.status(500)
-            ctx.json(mapOf("message" to "An error occurred during update"))
-        }
+    fun updateUser(ctx: Context){
+        val mapper = jacksonObjectMapper()
+        val userUpdates = mapper.readValue<User>(ctx.body())
+        userDao.update(
+            id = ctx.pathParam("user-id").toInt(),
+            user=userUpdates)
     }
+
 }

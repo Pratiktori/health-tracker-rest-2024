@@ -2,7 +2,6 @@ package ie.setu.config
 
 import ie.setu.controllers.HealthTrackerController
 import io.javalin.Javalin
-import io.javalin.apibuilder.ApiBuilder.*
 
 class JavalinConfig {
 
@@ -22,7 +21,7 @@ class JavalinConfig {
         app.get("/api/users/{user-id}", HealthTrackerController::getUserByUserId)
         app.post("/api/users", HealthTrackerController::addUser)
         app.get("/api/users/email/{email}", HealthTrackerController::getUserByEmail)
-        app.post("/api/users/{user-id}", HealthTrackerController :: deleteUser)
-        app.patch("/api/users/{user-id}", HealthTrackerController :: updateUser)
+        app.delete("/api/users/{user-id}", HealthTrackerController::deleteUser)
+        app.patch("/api/users/{user-id}", HealthTrackerController::updateUser)
     }
 }
