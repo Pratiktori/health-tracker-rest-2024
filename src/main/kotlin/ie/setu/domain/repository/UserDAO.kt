@@ -3,8 +3,13 @@ package ie.setu.domain.repository
 import ie.setu.domain.User
 import ie.setu.domain.db.Users
 import ie.setu.utils.mapToUser
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.deleteWhere
+import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.sql.update
+
 class UserDAO {
 
     private val users = arrayListOf<User>(
@@ -34,26 +39,50 @@ fun getAll(): ArrayList<User> {
         }
     }
 
-    fun save(user: User){
-        users.add(user)
+//    fun save(user: User){
+//        users.add(user)
+//    }
+fun save(user: User){
+    transaction {
+        Users.insert {
+            it[name] = user.name
+            it[email] = user.email
+        }
     }
+}
 
     fun findByEmail(email: String) :User?{
 //        return users.find { it.email == email }
-        return null
+        return transaction {
+            Users.selectAll().where {Users.email eq email}
+                .map{ mapToUser(it) }
+                .firstOrNull()
+        }
+
     }
 
-    fun delete(id: Int){
-        val user = findById(id)
-        users.remove(user)
+    fun delete(id: Int):Int{
+        return transaction{
+            Users.deleteWhere{ Users.id eq id }
+        }
     }
 
-    fun update(id: Int, user: User){
-        val foundUser = findById(id)
-        foundUser?.email = user.email
-        foundUser?.name = user.name
-        foundUser?.id = user.id
+//    fun update(id: Int, user: User){
+//        val foundUser = findById(id)
+//        foundUser?.email = user.email
+//        foundUser?.name = user.name
+//        foundUser?.id = user.id
+//    }
+fun update(id: Int, user: User){
+    transaction {
+        Users.update ({
+            Users.id eq id}) {
+            it[name] = user.name
+            it[email] = user.email
+        }
     }
+}
+
 
 
 }
