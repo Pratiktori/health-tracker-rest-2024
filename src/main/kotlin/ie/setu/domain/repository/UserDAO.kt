@@ -2,6 +2,7 @@ package ie.setu.domain.repository
 
 import ie.setu.domain.User
 import ie.setu.domain.db.Users
+import ie.setu.utils.mapToUser
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 class UserDAO {
@@ -26,8 +27,11 @@ fun getAll(): ArrayList<User> {
 }
 
     fun findById(id: Int): User?{
-//        return users.find {it.id == id}
-        return null
+        return transaction {
+            Users.selectAll().where { Users.id eq id }
+                .map{ mapToUser(it) }
+                .firstOrNull()
+        }
     }
 
     fun save(user: User){
