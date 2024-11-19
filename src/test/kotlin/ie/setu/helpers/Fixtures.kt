@@ -30,6 +30,8 @@ val activities = arrayListOf<Activity>(
     Activity(id = 2, description = "Hopping", duration = 10.5, calories = 80, started = DateTime.now(), userId = 1),
     Activity(id = 3, description = "Walking", duration = 12.0, calories = 120, started = DateTime.now(), userId = 2)
 )
+val updatedName = "Updated Name"
+val updatedEmail = "Updated Email"
 
 fun populateUserTable(): UserDAO {
     SchemaUtils.create(Users)

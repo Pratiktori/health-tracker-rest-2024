@@ -31,7 +31,7 @@ class UserDAO {
     }
 
 
-    fun save(user: User): Int {
+    fun save(user: User) : Int?{
         return transaction {
             Users.insert {
                 it[name] = user.name
