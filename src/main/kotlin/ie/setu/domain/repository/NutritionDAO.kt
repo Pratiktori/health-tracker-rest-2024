@@ -1,10 +1,14 @@
 package ie.setu.domain.repository
 
+import ie.setu.domain.Activity
 import ie.setu.domain.Nutrition
+import ie.setu.domain.db.Activities
 
 import ie.setu.domain.db.Diet
 import ie.setu.domain.db.Sleeping
+import ie.setu.utils.mapToActivity
 import ie.setu.utils.mapToNutrition
+import ie.setu.utils.mapToSleep
 
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.deleteWhere
@@ -25,12 +29,20 @@ class NutritionDAO {
         return nutritionList
     }
 
-
+    //Find a specific nutrition by nutrition id
+    fun findByNutritionId(id: Int): Nutrition?{
+        return transaction {
+            Diet
+                .selectAll().where { Diet.id eq id}
+                .map{ mapToNutrition(it) }
+                .firstOrNull()
+        }
+    }
     //Find all nutrition for a specific user id
     fun findByUserId(userId: Int): List<Nutrition>{
         return transaction {
             Diet
-                .selectAll().where { Sleeping.id eq userId}
+                .selectAll().where { Diet.userId eq userId}
                 .map { mapToNutrition(it) }
         }
     }
@@ -43,11 +55,11 @@ class NutritionDAO {
                 it[foodName] = nutrition.foodName
                 it[calories] = nutrition.calories
                 it[consumedAt] = nutrition.consumedAt
-
+                it[userId] = nutrition.userId
             }
         }
     }
-    fun updateByNutritionId(nutritionId: Int, nutritionToUpdate: Diet) : Int{
+    fun updateByNutritionId(nutritionId: Int, nutritionToUpdate: Nutrition) : Int{
         return transaction {
             Diet.update ({
                 Diet.id eq nutritionId}) {
@@ -61,7 +73,13 @@ class NutritionDAO {
 
     fun deleteByUserId (userId: Int): Int{
         return transaction{
-            Sleeping.deleteWhere { Sleeping.id eq userId }
+            Diet.deleteWhere { Diet.id eq userId }
+        }
+    }
+
+    fun deleteByNutritionId (nutritionId: Int): Int{
+        return transaction{
+            Diet.deleteWhere { Diet.id eq nutritionId }
         }
     }
 

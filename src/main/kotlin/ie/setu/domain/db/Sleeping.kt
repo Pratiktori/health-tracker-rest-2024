@@ -8,6 +8,7 @@ object Sleeping : Table("sleeping") {
     val name = varchar("name", 100)
     val duration = double("duration")
     val started = datetime("started")
+    val userId = integer("user_id")
     override val primaryKey = PrimaryKey(id, name = "PK_Sleeping_ID")
 }
 

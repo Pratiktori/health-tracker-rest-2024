@@ -6,8 +6,6 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import ie.setu.domain.Nutrition
 
-import ie.setu.domain.db.Diet
-
 import ie.setu.domain.repository.NutritionDAO
 import ie.setu.domain.repository.UserDAO
 import ie.setu.utils.jsonToObject
@@ -29,13 +27,13 @@ object NutritionController {
 
     fun getNutritionByUserId(ctx: Context) {
         if (userDao.findById(ctx.pathParam("user-id").toInt()) != null) {
-            val activities = nutritionDAO.findByUserId(ctx.pathParam("user-id").toInt())
-            if (activities.isNotEmpty()) {
+            val nutrition = nutritionDAO.findByUserId(ctx.pathParam("user-id").toInt())
+            if (nutrition.isNotEmpty()) {
                 //mapper handles the deserialization of Joda date into a String.
                 val mapper = jacksonObjectMapper()
                     .registerModule(JodaModule())
                     .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
-                ctx.json(mapper.writeValueAsString(activities))
+                ctx.json(mapper.writeValueAsString(nutrition))
             }
         }
     }
@@ -56,9 +54,9 @@ object NutritionController {
 
 
     fun updateNutrition(ctx: Context) {
-        val nutrition: Diet = jsonToObject(ctx.body())
+        val nutrition: Nutrition = jsonToObject(ctx.body())
         if (nutritionDAO.updateByNutritionId(
-                nutritionId = ctx.pathParam("activity-id").toInt(),
+                nutritionId = ctx.pathParam("nutrition-id").toInt(),
                 nutritionToUpdate = nutrition
             ) != 0
         )

@@ -1,7 +1,10 @@
 package ie.setu.domain.repository
 
+import ie.setu.domain.Activity
 import ie.setu.domain.Sleep
+import ie.setu.domain.db.Activities
 import ie.setu.domain.db.Sleeping
+import ie.setu.utils.mapToActivity
 import ie.setu.utils.mapToSleep
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.deleteWhere
@@ -22,12 +25,21 @@ class SleepDAO {
         return sleepList
     }
 
+    //Find a specific sleep by sleep id
+    fun findBySleepId(id: Int): Sleep?{
+        return transaction {
+            Sleeping
+                .selectAll().where { Sleeping.id eq id}
+                .map{ mapToSleep(it) }
+                .firstOrNull()
+        }
+    }
 
     //Find all sleepcycle for a specific user id
     fun findByUserId(userId: Int): List<Sleep>{
         return transaction {
             Sleeping
-                .selectAll().where { Sleeping.id eq userId}
+                .selectAll().where { Sleeping.userId eq userId}
                 .map { mapToSleep(it) }
         }
     }
@@ -39,21 +51,25 @@ class SleepDAO {
                 it[id] = sleep.id
                 it[duration] = sleep.duration
                 it[name] = sleep.name
+                it[started] = sleep.started
+                it[userId] = sleep.userId
             }
         }
     }
-    fun updateBySleepId(sleepId: Int, sleepToUpdate: Sleeping) : Int{
+    fun updateBySleepId(sleepId: Int, sleepToUpdate: Sleep) : Int{
         return transaction {
             Sleeping.update ({
                 Sleeping.id eq sleepId}) {
                 it[id] = sleepToUpdate.id
                 it[duration] = sleepToUpdate.duration
                 it[name] = sleepToUpdate.name
+                it[started] = sleepToUpdate.started
+                it[userId] = sleepToUpdate.userId
             }
         }
     }
 
-    fun deleteByUserId (userId: Int): Int{
+    fun deleteBySleepId (userId: Int): Int{
         return transaction{
             Sleeping.deleteWhere { Sleeping.id eq userId }
         }

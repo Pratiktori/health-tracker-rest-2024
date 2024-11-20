@@ -27,13 +27,13 @@ object SleepController {
 
     fun getSleepByUserId(ctx: Context) {
         if (userDao.findById(ctx.pathParam("user-id").toInt()) != null) {
-            val activities = sleepDAO.findByUserId(ctx.pathParam("user-id").toInt())
-            if (activities.isNotEmpty()) {
+            val sleeping = sleepDAO.findByUserId(ctx.pathParam("user-id").toInt())
+            if (sleeping.isNotEmpty()) {
                 //mapper handles the deserialization of Joda date into a String.
                 val mapper = jacksonObjectMapper()
                     .registerModule(JodaModule())
                     .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
-                ctx.json(mapper.writeValueAsString(activities))
+                ctx.json(mapper.writeValueAsString(sleeping))
             }
         }
     }
@@ -49,14 +49,14 @@ object SleepController {
     }
 
     fun deleteSleepByUserId(ctx: Context) {
-        sleepDAO.deleteByUserId(ctx.pathParam("user-id").toInt())
+        sleepDAO.deleteBySleepId(ctx.pathParam("user-id").toInt())
     }
 
 
     fun updateSleep(ctx: Context) {
-        val sleep: Sleeping = jsonToObject(ctx.body())
+        val sleep: Sleep = jsonToObject(ctx.body())
         if (sleepDAO.updateBySleepId(
-                sleepId = ctx.pathParam("activity-id").toInt(),
+                sleepId = ctx.pathParam("sleep-id").toInt(),
                 sleepToUpdate = sleep
             ) != 0
         )

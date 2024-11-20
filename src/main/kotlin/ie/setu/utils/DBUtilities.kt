@@ -23,7 +23,8 @@ fun mapToSleep(it: ResultRow) = Sleep(
     id = it[Sleeping.id],
     name = it[Sleeping.name],
     duration = it[Sleeping.duration],
-    started = it[Sleeping.started]
+    started = it[Sleeping.started],
+    userId = it[Sleeping.userId]
 )
 
 fun mapToNutrition(it: ResultRow) = Nutrition(

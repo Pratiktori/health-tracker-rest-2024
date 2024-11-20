@@ -1,0 +1,533 @@
+openapi: 3.0.0
+info:
+  title: HealthTracker API
+  description: API for managing users in the HealthTracker application.
+  version: 1.0.0
+servers:
+  - url: http://localhost:7001
+    description: Local development server
+paths:
+  /api/users:
+    get:
+      summary: Get all users
+      operationId: getAllUsers
+      responses:
+        '200':
+          description: A list of all users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    post:
+      summary: Add a new user
+      operationId: addUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: User created successfully
+  /api/users/{user-id}:
+    get:
+      summary: Get user by ID
+      operationId: getUserByUserId
+      parameters:
+        - name: user-id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: User not found
+    delete:
+      summary: Delete user by ID
+      operationId: deleteUser
+      parameters:
+        - name: user-id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: User deleted successfully
+    patch:
+      summary: Update user by ID
+      operationId: updateUser
+      parameters:
+        - name: user-id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: User updated successfully
+  /api/users/email/{email}:
+    get:
+      summary: Get user by email
+      operationId: getUserByEmail
+      parameters:
+        - name: email
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: User not found
+  /api/activities:
+    get:
+      summary: Get all activities
+      operationId: getAllActivities
+      responses:
+        '200':
+          description: A list of all activities
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Activity'
+    post:
+      summary: Add a new activity
+      operationId: addActivity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Activity'
+      responses:
+        '201':
+          description: Activity created successfully
+  /api/users/{user-id}/activities:
+      get:
+        summary: Get activities by user ID
+        operationId: getActivitiesByUserId
+        parameters:
+          - name: user-id
+            in: path
+            required: true
+            schema:
+              type: string
+        responses:
+          '200':
+            description: List of activities for the specified user
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Activity'
+      delete:
+        summary: Delete activities by user ID
+        operationId: deleteActivityByUserId
+        parameters:
+          - name: user-id
+            in: path
+            required: true
+            schema:
+              type: string
+        responses:
+          '204':
+            description: Activities deleted successfully
+  /api/activities/{activity-id}:
+      get:
+        summary: Get activity by ID
+        operationId: getActivityById
+        parameters:
+          - name: activity-id
+            in: path
+            required: true
+            schema:
+              type: string
+        responses:
+          '200':
+            description: Details of the activity
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Activity'
+          '404':
+            description: Activity not found
+      delete:
+        summary: Delete activity by ID
+        operationId: deleteActivityByActivityId
+        parameters:
+          - name: activity-id
+            in: path
+            required: true
+            schema:
+              type: string
+        responses:
+          '204':
+            description: Activity deleted successfully
+  /api/sleep:
+    get:
+      summary: Get all sleep cycles
+      operationId: getAllSleepcycle
+      responses:
+        '200':
+          description: A list of all sleep cycles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Sleep'
+    post:
+      summary: Add a new sleep record
+      operationId: addSleep
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Sleep'
+      responses:
+        '201':
+          description: Sleep record added successfully
+  /api/sleep/{user-id}:
+      get:
+        summary: Get sleep records by user ID
+        operationId: getSleepByUserId
+        parameters:
+          - name: user-id
+            in: path
+            required: true
+            schema:
+              type: string
+        responses:
+          '200':
+            description: Sleep records for the specified user
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Sleep'
+      patch:
+        summary: Update sleep record by user ID
+        operationId: updateSleep
+        parameters:
+          - name: user-id
+            in: path
+            required: true
+            schema:
+              type: string
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sleep'
+        responses:
+          '200':
+            description: Sleep record updated successfully
+  /api/users/{user-id}/sleep:
+      delete:
+        summary: Delete sleep records by user ID
+        operationId: deleteSleepByUserId
+        parameters:
+          - name: user-id
+            in: path
+            required: true
+            schema:
+              type: string
+        responses:
+          '204':
+            description: Sleep records deleted successfully
+      patch:
+        summary: Update activity by ID
+        operationId: updateActivity
+        parameters:
+          - name: activity-id
+            in: path
+            required: true
+            schema:
+              type: string
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Activity'
+        responses:
+          '200':
+            description: Activity updated successfully
+
+  /api/nutrition:
+    get:
+      summary: Get all nutrition records
+      operationId: getAllNutrition
+      responses:
+        '200':
+          description: A list of all nutrition records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Nutrition'
+    post:
+      summary: Add a new nutrition record
+      operationId: addNutrition
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Nutrition'
+      responses:
+        '201':
+          description: Nutrition record added successfully
+  /api/nutrition/{user-id}:
+      get:
+        summary: Get nutrition records by user ID
+        operationId: getNutritionByUserId
+        parameters:
+          - name: user-id
+            in: path
+            required: true
+            schema:
+              type: string
+        responses:
+          '200':
+            description: Nutrition records for the specified user
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Nutrition'
+      patch:
+        summary: Update nutrition record by user ID
+        operationId: updateNutrition
+        parameters:
+          - name: user-id
+            in: path
+            required: true
+            schema:
+              type: string
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Nutrition'
+        responses:
+          '200':
+            description: Nutrition record updated successfully
+  /api/users/{user-id}/nutrition:
+      delete:
+        summary: Delete nutrition records by user ID
+        operationId: deleteNutritionByUserId
+        parameters:
+          - name: user-id
+            in: path
+            required: true
+            schema:
+              type: string
+        responses:
+          '204':
+            description: Nutrition records deleted successfully
+
+  /api/workout:
+    get:
+      summary: Get all workouts
+      operationId: getAllWorkouts
+      responses:
+        '200':
+          description: A list of all workouts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Workout'
+    post:
+      summary: Add a new workout
+      operationId: addWorkout
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Workout'
+      responses:
+        '201':
+          description: Workout added successfully
+  /api/workout/{user-id}:
+      get:
+        summary: Get workouts by user ID
+        operationId: getWorkoutsByUserId
+        parameters:
+          - name: user-id
+            in: path
+            required: true
+            schema:
+              type: string
+        responses:
+          '200':
+            description: Workouts for the specified user
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Workout'
+      patch:
+        summary: Update workout by user ID
+        operationId: updateWorkout
+        parameters:
+          - name: user-id
+            in: path
+            required: true
+            schema:
+              type: string
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workout'
+        responses:
+          '200':
+            description: Workout updated successfully
+  /api/users/{user-id}/workout:
+      delete:
+        summary: Delete workouts by user ID
+        operationId: deleteWorkoutByUserId
+        parameters:
+          - name: user-id
+            in: path
+            required: true
+            schema:
+              type: string
+        responses:
+          '204':
+            description: Workouts deleted successfully
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the user
+        name:
+          type: string
+          description: Name of the user
+        email:
+          type: string
+          description: Email address of the user
+        age:
+          type: integer
+          description: Age of the user
+
+    Activity:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the activity
+        userId:
+          type: string
+          description: ID of the user associated with the activity
+        name:
+          type: string
+          description: Name of the activity
+        duration:
+          type: number
+          description: Duration of the activity in minutes
+        timestamp:
+          type: string
+          format: date-time
+          description: Time when the activity was logged
+
+    Sleep:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the sleep cycle
+        userId:
+          type: string
+          description: ID of the user associated with the sleep cycle
+        startTime:
+          type: string
+          format: date-time
+          description: Start time of the sleep
+        endTime:
+          type: string
+          format: date-time
+          description: End time of the sleep
+        quality:
+          type: string
+          description: Quality of the sleep (e.g., poor, average, good)
+
+    Nutrition:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the nutrition record
+        userId:
+          type: string
+          description: ID of the user associated with the nutrition record
+        mealType:
+          type: string
+          description: Type of meal (e.g., breakfast, lunch, dinner, snack)
+        calories:
+          type: number
+          description: Number of calories in the meal
+        timestamp:
+          type: string
+          format: date-time
+          description: Time when the meal was logged
+
+    Workout:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the workout
+        userId:
+          type: string
+          description: ID of the user associated with the workout
+        type:
+          type: string
+          description: Type of workout (e.g., cardio, strength, flexibility)
+        duration:
+          type: number
+          description: Duration of the workout in minutes
+        timestamp:
+          type: string
+          format: date-time
+          description: Time when the workout was logged
