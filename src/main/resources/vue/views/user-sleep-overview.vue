@@ -3,7 +3,7 @@
     <h3>Sleeping list </h3>
     <ul>
       <li v-for="sleep in sleeping">
-        {{sleep.id}}: {{sleep.description}} for {{sleep.duration}} minutes
+        {{sleep.id}}: {{sleep.name}} for {{sleep.duration}} minutes
       </li>
     </ul>
   </div>

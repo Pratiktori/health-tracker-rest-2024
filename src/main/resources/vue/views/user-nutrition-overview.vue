@@ -3,7 +3,7 @@
     <h3>Diet list </h3>
     <ul>
       <li v-for="nutrition in diet">
-        {{nutrition.id}}: {{nutrition.description}} for {{nutrition.duration}} minutes
+        {{nutrition.id}}: {{nutrition.name}} for {{nutrition.duration}} minutes
       </li>
     </ul>
   </div>
