@@ -53,6 +53,33 @@
           </li>
         </ul>
       </div>
+      <div class="card-footer text-left">
+        <p  v-if="sleeping.length === 0"> No sleeping yet...</p>
+        <p  v-if="sleeping.length > 0"> sleeping so far...</p>
+        <ul>
+          <li v-for="sleep in sleeping">
+            {{ sleep.name }} for {{ sleep.duration }} minutes
+          </li>
+        </ul>
+      </div>
+      <div class="card-footer text-left">
+        <p  v-if="diet.length === 0"> No diet yet...</p>
+        <p  v-if="diet.length > 0"> diet so far...</p>
+        <ul>
+          <li v-for="nutrition in diet">
+            {{ nutrition.foodName }} for {{ nutrition.consumedAt }} minutes
+          </li>
+        </ul>
+      </div>
+      <div class="card-footer text-left">
+        <p  v-if="workouts.length === 0"> No workouts yet...</p>
+        <p  v-if="workouts.length > 0"> workouts so far...</p>
+        <ul>
+          <li v-for="workout in workouts">
+            {{ workout.name }} for {{ workout.duration }} minutes
+          </li>
+        </ul>
+      </div>
     </div>
   </app-layout>
 </template>
@@ -64,6 +91,9 @@ app.component("user-profile", {
     user: null,
     noUserFound: false,
     activities: [],
+    sleeping: [],
+    diet: [],
+    workouts: [],
   }),
   created: function () {
     const userId = this.$javalin.pathParams["user-id"];
@@ -78,6 +108,21 @@ app.component("user-profile", {
         .then(res => this.activities = res.data)
         .catch(error => {
           console.log("No activities added yet (this is ok): " + error)
+        })
+    axios.get(url + `/sleep`)
+        .then(res => this.sleeping = res.data)
+        .catch(error => {
+          console.log("No sleeping added yet (this is ok): " + error)
+        })
+    axios.get(url + `/nutrition`)
+        .then(res => this.diet = res.data)
+        .catch(error => {
+          console.log("No diet added yet (this is ok): " + error)
+        })
+    axios.get(url + `/workout`)
+        .then(res => this.workouts = res.data)
+        .catch(error => {
+          console.log("No workouts added yet (this is ok): " + error)
         })
   },
   methods: {

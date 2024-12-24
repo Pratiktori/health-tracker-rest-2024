@@ -61,9 +61,10 @@ fun startJavalinService(): Javalin {
         // the layout and display our <home-page> component.
         app.get("/", VueComponent("<home-page></home-page>"))
         app.get("/users", VueComponent("<user-overview></user-overview>"))
-//        app.get("/activities", VueComponent("<activity-overview></activity-overview>"))
-//        app.get("/sleep", VueComponent("<sleep-overview></sleep-overview>"))
-//        app.get("/workout", VueComponent("<workout-overview></workout-overview>"))
+        app.get("/activities", VueComponent("<activity-overview></activity-overview>"))
+        app.get("/sleep", VueComponent("<sleep-overview></sleep-overview>"))
+        app.get("/nutrition", VueComponent("<nutrition-overview></nutrition-overview>"))
+        app.get("/workout", VueComponent("<workout-overview></workout-overview>"))
         app.get("/users/{user-id}", VueComponent("<user-profile></user-profile>"))
         app.get("/users/{user-id}/activities", VueComponent("<user-activity-overview></user-activity-overview>"))
         app.get("/sleep/{user-id}", VueComponent("<user-sleep-overview></user-sleep-overview>"))
