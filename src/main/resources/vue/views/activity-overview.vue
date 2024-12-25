@@ -30,6 +30,24 @@
           </div>
           <input type="duration" class="form-control" v-model="formData.duration" name="duration" placeholder="How long you have to do"/>
         </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="input-activity-calories">Calories</span>
+          </div>
+          <input type="calories" class="form-control" v-model="formData.calories" name="calories" placeholder="calories"/>
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="input-activity-started">Started</span>
+          </div>
+          <input type="started" class="form-control" v-model="formData.started" name="started" placeholder="started"/>
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="input-activity-userId">UserId</span>
+          </div>
+          <input type="userId" class="form-control" v-model="formData.userId" name="userId" placeholder="userId"/>
+        </div>
       </form>
       <button rel="tooltip" title="Update" class="btn btn-info btn-simple btn-link" @click="addActivity()">Add Activity</button>
     </div>

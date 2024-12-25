@@ -26,9 +26,21 @@
         </div>
         <div class="input-group mb-3">
           <div class="input-group-prepend">
+            <span class="input-group-text" id="input-nutrition-calories">Calories</span>
+          </div>
+          <input type="calories" class="form-control" v-model="formData.calories" name="calories" placeholder="calories"/>
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
             <span class="input-group-text" id="input-nutrition-consumedAt">Consumed</span>
           </div>
           <input type="consumedAt" class="form-control" v-model="formData.consumedAt" name="consumedAt" placeholder="Consumed at "/>
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="input-nutrition-userId">UserId</span>
+          </div>
+          <input type="userId" class="form-control" v-model="formData.userId" name="userId" placeholder="userId"/>
         </div>
       </form>
       <button rel="tooltip" title="Update" class="btn btn-info btn-simple btn-link" @click="addNutrition()">Add Nutrition</button>

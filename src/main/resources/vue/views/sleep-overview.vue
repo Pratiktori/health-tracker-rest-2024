@@ -30,6 +30,18 @@
           </div>
           <input type="duration" class="form-control" v-model="formData.duration" name="duration" placeholder="How long you have to sleep"/>
         </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="input-sleep-started">Started</span>
+          </div>
+          <input type="started" class="form-control" v-model="formData.started" name="started" placeholder="started"/>
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="input-sleep-userId">UserId</span>
+          </div>
+          <input type="userId" class="form-control" v-model="formData.userId" name="userId" placeholder="userId"/>
+        </div>
       </form>
       <button rel="tooltip" title="Update" class="btn btn-info btn-simple btn-link" @click="addSleep()">Add Sleep</button>
     </div>

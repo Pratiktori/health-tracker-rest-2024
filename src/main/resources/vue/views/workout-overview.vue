@@ -26,9 +26,27 @@
         </div>
         <div class="input-group mb-3">
           <div class="input-group-prepend">
+            <span class="input-group-text" id="input-workout-duration">Duration</span>
+          </div>
+          <input type="duration" class="form-control" v-model="formData.duration" name="duration" placeholder="How long you have to do"/>
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="input-workout-caloriesBurned">CaloriesBurned</span>
+          </div>
+          <input type="caloriesBurned" class="form-control" v-model="formData.caloriesBurned" name="caloriesBurned" placeholder="Calories Burned"/>
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
             <span class="input-group-text" id="input-workout-performedAt">Performed</span>
           </div>
           <input type="performedAt" class="form-control" v-model="formData.performedAt" name="performedAt" placeholder="What time you performed"/>
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="input-workout-userId">UserId</span>
+          </div>
+          <input type="userId" class="form-control" v-model="formData.userId" name="userId" placeholder="userId"/>
         </div>
       </form>
       <button rel="tooltip" title="Update" class="btn btn-info btn-simple btn-link" @click="addWorkout()">Add Workout</button>
