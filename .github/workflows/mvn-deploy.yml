@@ -23,6 +23,7 @@ jobs:
         with:
           name: Jar with Builds
           path: target/*.jar
+          
   documentation: 
     runs-on: ubuntu-latest
     needs: package
