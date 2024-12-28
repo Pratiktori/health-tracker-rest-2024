@@ -8,7 +8,7 @@ import io.javalin.vue.VueComponent
 
 class JavalinConfig {
 
-fun startJavalinService(): Javalin {
+fun startJavalinService() {
     val app = Javalin.create{
         //added this jsonMapper for our integration tests - serialise objects to json
         it.jsonMapper(JavalinJackson(jsonObjectMapper()))
@@ -17,10 +17,17 @@ fun startJavalinService(): Javalin {
     }.apply {
         exception(Exception::class.java) { e, _ -> e.printStackTrace() }
         error(404) { ctx -> ctx.json("404 : Not Found") }
-    }.start(getRemoteAssignedPort())
+    }
+    fun startJavalinService(): Javalin {
+        app.start(getRemoteAssignedPort())
+        registerRoutes(app)
+        return app
+    }
 
-    registerRoutes(app)
-    return app
+    fun getJavalinService(): Javalin {
+        registerRoutes(app)
+        return app
+    }
 }
 
     private fun registerRoutes(app: Javalin) {
